@@ -1,9 +1,7 @@
 package com.example.cardatabase.domain;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +37,6 @@ public class Owner {
 	}
 	
 	
-
 	public Long getOwnerid() {
 		return ownerid;
 	}

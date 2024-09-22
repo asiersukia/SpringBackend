@@ -8,23 +8,25 @@ import org.springframework.stereotype.Service;
 import com.example.cardatabase.domain.AppUser;
 import com.example.cardatabase.domain.IAppUserRepository;
 @Service
-public class UserDetailsServiceImpl {
+public class UserDetailsServiceImpl implements UserDetailsService {
 	  private final IAppUserRepository repository;
 	  public UserDetailsServiceImpl(IAppUserRepository repository) {
 	      this.repository = repository;
 	  }
-	      public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	          Optional<AppUser> user = repository.findByUsername(username);
-	          UserBuilder builder = null;
-	          if (user.isPresent()) {
-	              AppUser currentUser = user.get();
-	              builder = org.springframework.security.core.userdetails.
-	                        User.withUsername(username);
-	              builder.password(currentUser.getPassword());
-	              builder.roles(currentUser.getRole());
-	          } else {
-	              throw new UsernameNotFoundException("User not found.");
-	          }
-	          return builder.build();
-	      }
+
+  @Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<AppUser> user = repository.findByUsername(username);
+	  UserBuilder builder = null;
+	  if (user.isPresent()) {
+	    AppUser currentUser = user.get();
+	    builder = org.springframework.security.core.userdetails.
+	      User.withUsername(username);
+	    builder.password(currentUser.getPassword());
+	    builder.roles(currentUser.getRole());
+	  } else {
+	    throw new UsernameNotFoundException("User not found.");
+	  }
+	    return builder.build();
+	}
 }
